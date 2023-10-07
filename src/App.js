@@ -21,22 +21,48 @@ const App = () =>{
           luminosity: 'light'
         }),
         defaultPos: {
-          x: -100,
-          y: -100
+          x: 500,
+          y: -500
         }
       }
+      setItems((items) => [...items, newItem])
+      setItem("")
+    }else {
+      alert("Напиши нотатку!!!")
     }
+  }
+  const deleteItem = (id) =>{
+
+    setItems(items.filter((item) => item.id !== id))
   }
   return (
     <div className="App">
       <div className="wrapper">
           <input
+              value={item}
               type="text"
               placeholder="Typing..."
               onChange={(e) => setItem(e.target.value)}
           />
           <button className="enter" onClick={newItem}>ENTER</button>
       </div>
+      {
+        items.map((item, index)=>{
+          return(
+            <Draggable
+              key = {index}
+              defaultPosition = {item.defaultPos}
+            >
+              <div className='todo__item' style={{backgroundColor: item.color}}>
+                {`${item.item}`}
+                <button className='delete' onClick={()=> deleteItem(item.id)}>
+                  X
+                </button>
+              </div>
+            </Draggable>
+          )
+        })
+      }
     </div>
   );
 }

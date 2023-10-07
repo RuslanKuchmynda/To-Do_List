@@ -35,3 +35,22 @@ input{
     background: whitesmoke;
     color: #222222;
 }
+
+.todo__item{
+    position: absolute;
+    cursor: move;
+    min-width: 215px;
+    color: black;
+    padding: 1em;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.delete{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
