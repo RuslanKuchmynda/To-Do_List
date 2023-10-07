@@ -21,8 +21,8 @@ const App = () =>{
           luminosity: 'light'
         }),
         defaultPos: {
-          x: 500,
-          y: -500
+          x: Math.floor(Math.random() * (window.innerWidth - window.innerHeight) - 100),
+          y: Math.floor(Math.random() * (window.innerHeight - window.innerWidth) - 100)
         }
       }
       setItems((items) => [...items, newItem])
@@ -32,9 +32,14 @@ const App = () =>{
     }
   }
   const deleteItem = (id) =>{
-
     setItems(items.filter((item) => item.id !== id))
   }
+  const updatePos = (data, index) =>{
+    let newArray = [...items]
+    newArray[index].defaultPos = {x: data.x, y: data.y}
+    setItems(newArray)
+  }
+
   return (
     <div className="App">
       <div className="wrapper">
@@ -44,7 +49,10 @@ const App = () =>{
               placeholder="Typing..."
               onChange={(e) => setItem(e.target.value)}
           />
-          <button className="enter" onClick={newItem}>ENTER</button>
+          <button
+            className="enter"
+            onClick={newItem}
+          >ENTER</button>
       </div>
       {
         items.map((item, index)=>{
@@ -52,6 +60,9 @@ const App = () =>{
             <Draggable
               key = {index}
               defaultPosition = {item.defaultPos}
+              onStop={(_,data)=>{
+                updatePos(data, index)
+              }}
             >
               <div className='todo__item' style={{backgroundColor: item.color}}>
                 {`${item.item}`}
